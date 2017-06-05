@@ -19,3 +19,8 @@ $ docker run -v /var/run/docker.sock:/tmp/docker.sock:ro -v /data/docker/caddy-p
 ```
 
 When you launch new (or stop) containers caddy-proxy will reload its configuration to make the new containers available.
+
+If you want reload caddy config
+```sh
+docker exec caddy-proxy reload
+```
