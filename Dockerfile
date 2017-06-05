@@ -30,8 +30,6 @@ RUN curl --silent --show-error --fail --location \
 RUN curl -sL docker-gen-linux-amd64-$DOCKER_GEN_VERSION.tar.gz https://github.com/jwilder/docker-gen/releases/download/$DOCKER_GEN_VERSION/docker-gen-linux-amd64-$DOCKER_GEN_VERSION.tar.gz | \
     tar -C /usr/local/bin -xvzf -
 
-RUN printf ":80\nproxy / caddyserver.com" > /etc/Caddyfile
-
 ADD root /
 
 EXPOSE 80 443 2015

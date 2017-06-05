@@ -1,3 +1,4 @@
+import /root/.caddy/vhosts/*
 {{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
 {{ $host }} {
   {{ range $index, $value := $containers }}

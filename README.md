@@ -15,7 +15,7 @@ $ docker run -e VIRTUAL_HOST=foo.bar.com -e BASIC_AUTH="/ myname mysecrect" ...
 
 Then to run it:
 ```sh
-$ docker run -v /var/run/docker.sock:/tmp/docker.sock:ro -v /data/.caddy:/root/.caddy --name caddy-proxy -p 80:80 -p 443:443 -e CADDY_OPTIONS="--email youremail@example.com" -d blackglory/caddy-proxy:0.2.1
+$ docker run -v /var/run/docker.sock:/tmp/docker.sock:ro -v /data/docker/caddy-proxy:/root/.caddy --name caddy-proxy -p 80:80 -p 443:443 -e CADDY_OPTIONS="--email s@s.mk" -d miniers/caddy-proxy
 ```
 
 When you launch new (or stop) containers caddy-proxy will reload its configuration to make the new containers available.

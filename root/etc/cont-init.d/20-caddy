@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv sh
+
+if [ ! -e /root/.caddy/vhosts ]; then
+ mkdir /root/.caddy/vhosts
+fi
