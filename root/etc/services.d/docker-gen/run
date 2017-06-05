@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+exec docker-gen -notify "s6-svc -h /var/run/s6/services/caddy" -watch /etc/caddy-proxy/caddy.tmpl /etc/Caddyfile

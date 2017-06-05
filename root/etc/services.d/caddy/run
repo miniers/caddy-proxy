@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+exec caddy -conf /etc/Caddyfile $ENV_CADDY_OPTIONS
