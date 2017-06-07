@@ -6,6 +6,11 @@ import /root/.caddy/vhosts/*
     {{ if $basicauth }}
         basicauth {{ $basicauth }}
     {{ end }}
+    {{ if $value.Env.DNSPOD_API_KEY }}
+        tls {
+          dns dnspod
+        }
+    {{ end }}
     {{ $addrLen := len $value.Addresses }}
     {{ if eq $addrLen 1 }}
       {{ with $address := index $value.Addresses 0 }}
