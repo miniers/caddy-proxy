@@ -3,3 +3,6 @@
 if [ ! -e /root/.caddy/vhosts ]; then
  mkdir /root/.caddy/vhosts
 fi
+if [ ! -e /root/.caddy/errors ]; then
+ mkdir /root/.caddy/errors
+fi
