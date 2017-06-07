@@ -6,11 +6,17 @@ import /root/.caddy/vhosts/*
     {{ if $basicauth }}
         basicauth {{ $basicauth }}
     {{ end }}
-    {{ if $value.Env.DNSPOD_API_KEY }}
+    {{ $dnspod := $value.Env.DNSPOD_API_KEY }}
+    {{ if $dnspod }}
         tls {
           dns dnspod
         }
     {{ end }}
+    errors /root/.caddy/errors/{{ $host }}/errors.log {
+      rotate_size 50 # Rotate after 50 MB
+      rotate_age  90 # Keep rotated files for 90 days
+      rotate_keep 20 # Keep at most 20 log files
+    }
     {{ $addrLen := len $value.Addresses }}
     {{ if eq $addrLen 1 }}
       {{ with $address := index $value.Addresses 0 }}
