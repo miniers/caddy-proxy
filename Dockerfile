@@ -19,14 +19,24 @@ RUN apk add --no-cache musl build-base su-exec libcap tini go git musl \
 	&& tail -n +${line} run.go >> newrun.go \
 	&& rm -f run.go \
 	&& mv newrun.go run.go \
-	&& go get github.com/$CADDY_REPO_OWNER/$CADDY_REPO_NAME/...
+	&& go get github.com/$CADDY_REPO_OWNER/$CADDY_REPO_NAME/... \
+	&& cp $GOPATH/bin/caddy /root/caddy \
+	&& rm -rf $GOPATH/*
+
+RUN mkdir -p $GOPATH/src/github.com/miniers/docker-gen  \
+    && git clone https://github.com/miniers/docker-gen.git $GOPATH/src/github.com/miniers/docker-gen \
+    && cd $GOPATH/src/github.com/miniers/docker-gen \
+    && go get github.com/robfig/glock \
+    && $GOPATH/bin/glock sync -n < GLOCKFILE \
+    && go get github.com/miniers/docker-gen/... \
+	&& cp $GOPATH/bin/docker-gen /root/docker-gen \
+	&& rm -rf $GOPATH/*
 
 FROM alpine:latest
 MAINTAINER miniers <m@minier.cc>
 
 ARG S6_OVERLAY_VERSION=v1.19.1.1 
 
-ENV DOCKER_GEN_VERSION 0.7.3
 ENV CADDY_OPTIONS ""
 ENV DOCKER_HOST unix:///tmp/docker.sock
 
@@ -41,14 +51,13 @@ RUN apk add --update --no-cache curl tzdata && \
 
 
 # install caddy
-COPY --from=build-env /gopath/bin/caddy /usr/bin/caddy
+COPY --from=build-env /root/caddy /usr/bin/caddy
 
 RUN chmod 0755 /usr/bin/caddy \
  && /usr/bin/caddy -version
 
 # install docker-gen
-RUN curl -sL docker-gen-linux-amd64-$DOCKER_GEN_VERSION.tar.gz https://github.com/jwilder/docker-gen/releases/download/$DOCKER_GEN_VERSION/docker-gen-linux-amd64-$DOCKER_GEN_VERSION.tar.gz | \
-    tar -C /usr/local/bin -xvzf -
+COPY --from=build-env /root/docker-gen /usr/local/bin/docker-gen
 
 ADD root /
 
