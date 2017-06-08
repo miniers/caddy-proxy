@@ -53,10 +53,8 @@ RUN apk add --update --no-cache curl tzdata && \
 # install caddy
 COPY --from=build-env /root/caddy /usr/bin/caddy
 
-RUN chmod 0755 /usr/bin/caddy \
- && /usr/bin/caddy -version
-
 # install docker-gen
+
 COPY --from=build-env /root/docker-gen /usr/local/bin/docker-gen
 
 ADD root /

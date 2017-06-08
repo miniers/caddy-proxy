@@ -11,6 +11,8 @@ import /root/.caddy/vhosts/*
     header_upstream X-Real-IP {remote}
     header_upstream X-Forwarded-For {remote}
     header_upstream X-Forwarded-Proto {scheme}
+    header_upstream Connection {>Connection}
+    header_upstream Upgrade {>Upgrade}
   }
     {{ else if .Network }}
   ## Using Network IP:PORT
@@ -20,6 +22,8 @@ import /root/.caddy/vhosts/*
     header_upstream X-Real-IP {remote}
     header_upstream X-Forwarded-For {remote}
     header_upstream X-Forwarded-Proto {scheme}
+    header_upstream Connection {>Connection}
+    header_upstream Upgrade {>Upgrade}
   }
     {{ end }} 
   {{ else if .Network }}
@@ -31,6 +35,8 @@ import /root/.caddy/vhosts/*
     header_upstream X-Real-IP {remote}
     header_upstream X-Forwarded-For {remote}
     header_upstream X-Forwarded-Proto {scheme}
+    header_upstream Connection {>Connection}
+    header_upstream Upgrade {>Upgrade}
   }
   {{ end }}
 {{ end }}
