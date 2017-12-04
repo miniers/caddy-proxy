@@ -9,8 +9,8 @@ COPY plugins.txt /plugins
 RUN apk add --no-cache musl build-base su-exec libcap tini go git musl \
 	&& mkdir -p $GOPATH/src/github.com/$CADDY_REPO_OWNER \
 	&& cd $GOPATH/src/github.com/$CADDY_REPO_OWNER \
-	&& git clone https://github.com/$CADDY_REPO_OWNER/$CADDY_REPO_NAME \
-	&& cd $CADDY_REPO_NAME \
+	&& git clone https://github.com/$CADDY_REPO_OWNER/$CADDY_REPO_NAME 
+RUN cd $GOPATH/src/github.com/$CADDY_REPO_OWNER/$CADDY_REPO_NAME \
 	&& cd caddy/caddymain \
 	&& export line="$(grep -n "// This is where other plugins get plugged in (imported)" < run.go | sed 's/^\([0-9]\+\):.*$/\1/')" \
 	&& head -n ${line} run.go > newrun.go \
@@ -21,7 +21,7 @@ RUN apk add --no-cache musl build-base su-exec libcap tini go git musl \
 	&& mv newrun.go run.go \
 	&& go get github.com/$CADDY_REPO_OWNER/$CADDY_REPO_NAME/... \
 	&& cp $GOPATH/bin/caddy /root/caddy \
-	&& rm -rf $GOPATH/*
+	&& rm -rf $GOPATH/* 
 
 RUN mkdir -p $GOPATH/src/github.com/miniers/docker-gen  \
     && git clone https://github.com/miniers/docker-gen.git $GOPATH/src/github.com/miniers/docker-gen \
@@ -35,7 +35,7 @@ RUN mkdir -p $GOPATH/src/github.com/miniers/docker-gen  \
 FROM alpine:latest
 MAINTAINER miniers <m@minier.cc>
 
-ARG S6_OVERLAY_VERSION=v1.19.1.1 
+ARG S6_OVERLAY_VERSION=v1.21.1.1
 
 ENV CADDY_OPTIONS ""
 ENV DOCKER_HOST unix:///tmp/docker.sock

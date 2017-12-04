@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+docker-gen /etc/caddy-proxy/caddy.tmpl /etc/Caddyfile
