@@ -35,13 +35,13 @@ RUN mkdir -p $GOPATH/src/github.com/miniers/docker-gen  \
 FROM alpine:latest
 MAINTAINER miniers <m@minier.cc>
 
-ARG S6_OVERLAY_VERSION=v1.21.1.1
+ARG S6_OVERLAY_VERSION=v1.21.2.2
 
 ENV CADDY_OPTIONS ""
 ENV DOCKER_HOST unix:///tmp/docker.sock
 
 # install s6
-RUN apk add --update --no-cache curl tzdata && \
+RUN apk add --update --no-cache curl tzdata inotify-tools && \
     curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-amd64.tar.gz \
     | tar xfz - -C / && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
