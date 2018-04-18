@@ -1,3 +1,3 @@
 #!/usr/bin/with-contenv sh
 
-exec caddy -conf /etc/Caddyfile $CADDY_OPTIONS
+exec caddy -conf /etc/Caddyfile --agree=true --log stdout $CADDY_OPTIONS 
